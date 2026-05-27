@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Server Store</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Khmer OS Battambang';
+        }
+        body {
+            background: radial-gradient(circle, #1a102f 0%, #05020a 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        .subtitle {
+            color: #aaa;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        /* តំបន់បង្ហាញកាតតម្លៃ */
+        .shop-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* កាតទូទៅ */
+        .card {
+            background: rgba(15, 15, 25, 0.85);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* ស្ទាយពណ៌ទៅតាមប្រភេទ Kit */
+        .vip { 
+            border: 2px solid #e5a93b; 
+            box-shadow: 0 0 15px rgba(229, 169, 59, 0.2);
+        }
+        .vip:hover { box-shadow: 0 0 30px rgba(229, 169, 59, 0.6); }
+        .vip .title { color: #e5a93b; text-shadow: 0 0 10px rgba(229, 169, 59, 0.5); }
+        .vip .price-box { border: 2px solid #e5a93b; color: #e5a93b; background: rgba(229, 169, 59, 0.1); }
+
+        .mvp { 
+            border: 2px solid #e74c3c; 
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.2);
+        }
+        .mvp:hover { box-shadow: 0 0 30px rgba(231, 76, 60, 0.6); }
+        .mvp .title { color: #e74c3c; text-shadow: 0 0 10px rgba(231, 76, 60, 0.5); }
+        .mvp .price-box { border: 2px solid #e74c3c; color: #e74c3c; background: rgba(231, 76, 60, 0.1); }
+
+        .mythic { 
+            border: 2px solid #2ecc71; 
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.2);
+        }
+        .mythic:hover { box-shadow: 0 0 30px rgba(46, 204, 113, 0.6); }
+        .mythic .title { color: #2ecc71; text-shadow: 0 0 10px rgba(46, 204, 113, 0.5); }
+        .mythic .price-box { border: 2px solid #2ecc71; color: #2ecc71; background: rgba(46, 204, 113, 0.1); }
+
+        .mythic-plus { 
+            border: 2px solid #9b59b6; 
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.2);
+        }
+        .mythic-plus:hover { box-shadow: 0 0 30px rgba(155, 89, 182, 0.6); }
+        .mythic-plus .title { color: #9b59b6; text-shadow: 0 0 10px rgba(155, 89, 182, 0.5); }
+        .mythic-plus .price-box { border: 2px solid #9b59b6; color: #9b59b6; background: rgba(155, 89, 182, 0.1); }
+
+        /* ផ្នែកខាងក្នុងកាត */
+        .cube-img {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px auto;
+            background: #222;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        .title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 25px;
+            background: rgba(0,0,0,0.4);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .features li {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            color: #ddd;
+        }
+        .features li::before {
+            content: "⚡";
+            margin-right: 8px;
+        }
+        
+        /* ប្រអប់តម្លៃ */
+        .price-box {
+            font-size: 1.8rem;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 30px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* ប៊ូតុងទិញ */
+        .buy-btn {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .buy-btn:hover {
+            background: #ddd;
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>SERVER WEB STORE</h1>
+    <p class="subtitle">ជ្រើសរើសទិញប្រភេទ Kit ដែលអ្នកពេញចិត្តខាងក្រោម</p>
+
+    <div class="shop-container">
+        
+        <div class="card vip">
+            <div>
+                <div class="cube-img">🟨</div>
+                <div class="title">VIP KIT</div>
+                <ul class="features">
+                    <li>LANDS CLAIM: 10</li>
+                    <li>MONEY: 5M</li>
+                    <li>DURATION: 30 DAY</li>
+                </ul>
+            </div>
+            <div>
+                <div class="price-box">5$</div>
+                <button class="buy-btn" onclick="orderKit('VIP KIT', '5$')">ទិញឥឡូវនេះ</button>
+            </div>
+        </div>
+
+        <div class="card mvp">
+            <div>
+                <div class="cube-img">🟥</div>
+                <div class="title">MVP+ KIT</div>
+                <ul class="features">
+                    <li>LANDS CLAIM: 16</li>
+                    <li>MONEY: 10M</li>
+                    <li>DURATION: 30 DAY</li>
+                </ul>
+            </div>
+            <div>
+                <div class="price-box">10$</div>
+                <button class="buy-btn" onclick="orderKit('MVP+ KIT', '10$')">ទិញឥឡូវនេះ</button>
+            </div>
+        </div>
+
+        <div class="card mythic">
+            <div>
+                <div class="cube-img">🟩</div>
+                <div class="title">MYTHIC KIT</div>
+                <ul class="features">
+                    <li>LANDS CLAIM: 18</li>
+                    <li>MONEY: 25M</li>
+                    <li>DURATION: 30 DAY</li>
+                </ul>
+            </div>
+            <div>
+                <div class="price-box">15$</div>
+                <button class="buy-btn" onclick="orderKit('MYTHIC KIT', '15$')">ទិញឥឡូវនេះ</button>
+            </div>
+        </div>
+
+        <div class="card mythic-plus">
+            <div>
+                <div class="cube-img">🟪</div>
+                <div class="title">MYTHIC+ KIT</div>
+                <ul class="features">
+                    <li>LANDS CLAIM: 25</li>
+                    <li>MONEY: 30M</li>
+                    <li>DURATION: 30 DAY</li>
+                </ul>
+            </div>
+            <div>
+                <div class="price-box">18$</div>
+                <button class="buy-btn" onclick="orderKit('MYTHIC+ KIT', '18$')">ទិញឥឡូវនេះ</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function orderKit(kitName, price) {
+            alert("អ្នកបានជ្រើសរើសទិញ: " + kitName + " ក្នុងតម្លៃ " + price + "\n(យើងអាចភ្ជាប់មុខងារនេះទៅកាន់ Telegram Bot ឬកន្លែងបង់ប្រាក់បាន!)");
+        }
+    </script>
+</body>
+</html>
